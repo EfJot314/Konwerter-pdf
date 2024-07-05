@@ -50,6 +50,7 @@ class Application():
     def convert(self):
         # "Save As" window
         save_path = fd.asksaveasfilename(filetypes=[("Plik PDF","*.pdf")], defaultextension = "*.pdf")
+        
         #concat images to one .pdf file
         n = len(self.paths)
         if n > 0:
