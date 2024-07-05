@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog as fd
 from PIL import Image
+import os
 
 
 class Application():
@@ -8,6 +9,11 @@ class Application():
         #variables
         self.paths = []
         self.im = []
+        self.allowed_extensions = [
+                                    ".jpeg",
+                                    ".jpg",
+                                    ".png",
+                                ]
 
         #window
         self.root = tk.Tk()
@@ -16,8 +22,7 @@ class Application():
 
         self.scroll = tk.Scrollbar(self.root)
 
-        self.textbox = tk.Text(self.root, width = 80, 
-                               height = 10, yscrollcommand = self.scroll.set)
+        self.textbox = tk.Text(self.root, width = 80, height = 10, yscrollcommand = self.scroll.set)
 
         self.label1 = tk.Label(self.root, text = "Konwerter PDF", font = ("Times New Roman", 25))
         self.label2 = tk.Label(self.root, text = "Wybrane pliki:")
@@ -40,17 +45,20 @@ class Application():
 
     def openfile(self):
         #get file
-        file_name = fd.askopenfilename()
-        self.paths.append(file_name)
+        file_path = fd.askopenfilename()
+        _, extension = os.path.splitext(file_path)
+        if extension not in self.allowed_extensions:
+            return
+        self.paths.append(file_path)
         #show chosen files
-        self.textbox.insert(tk.END, file_name)
+        self.textbox.insert(tk.END, file_path)
         self.textbox.insert(tk.END, "\n")
 
    
     def convert(self):
         # "Save As" window
         save_path = fd.asksaveasfilename(filetypes=[("Plik PDF","*.pdf")], defaultextension = "*.pdf")
-        
+
         #concat images to one .pdf file
         n = len(self.paths)
         if n > 0:
