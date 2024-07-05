@@ -15,7 +15,7 @@ class Application():
                                     ".png",
                                 ]
 
-        #window
+        #UI
         self.root = tk.Tk()
         self.root.title("Konwerter PDF")
         self.root.geometry('700x600')
@@ -46,6 +46,7 @@ class Application():
     def openfile(self):
         #get file
         file_path = fd.askopenfilename()
+        #check extension
         _, extension = os.path.splitext(file_path)
         if extension not in self.allowed_extensions:
             return
